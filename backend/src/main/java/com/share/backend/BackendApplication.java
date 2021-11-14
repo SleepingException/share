@@ -1,13 +1,13 @@
-package com.demo.share;
+package com.share.backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ShareApplication {
+public class BackendApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ShareApplication.class, args);
+		SpringApplication.run(BackendApplication.class, args);
 	}
 
 }
