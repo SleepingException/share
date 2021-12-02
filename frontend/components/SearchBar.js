@@ -1,85 +1,107 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 import {
-  SafeAreaView,
-  Text,
-  View,
-  StyleSheet,
-  TextInput,
-  FlatList,
+    SafeAreaView,
+    Text,
+    View,
+    StyleSheet,
+    TextInput,
+    FlatList,
 } from 'react-native';
 
-const SearchBar = () =>{
+const path = 'http://localhost:8080/';
+
+const SearchBar = () => {
     const [search, setSearch] = useState('');
     const [filterDataSource, setFilterDataSource] = useState([]);
     const [masterDataSource, setMasterDataSource] = useState([]);
 
-const obj =[
-    {
-        'userId': 1,
-        'id': 1,
-        'title': "Jopa",
-        'body': "Opisanie jopy"
-    },
-]
-
-    // useEffect(() => {
-    //     fetch(`https://jsonplaceholder.typicode.com/posts`, {
-    //     method: "GET",
-    //     headers: {
-    //         Accept: 'application/json',
-    //     },   
-    //    // body: $('body')
-
-    //     })
-    //     //fetch('https://jsonplaceholder.typicode.com/posts',{ method: 'GET'})
-    //     .then((response) => response.json())
-    //     .then((responseJson) =>{
-    //         setFilterDataSource(responseJson);
-    //         setMasterDataSource(responseJson);
-    //     })
-    //     .catch((error) =>{
-    //         console.error(error);
-    //     })
-    // });
+    useEffect(() => {
+        axios.get(path + 'items/get/all')
+            .then((response) => {
+                if (response.status >= 200 && response.status < 300) {
+                    return response;
+                } else {
+                    let error = new Error(response.statusText);
+                    error.response = response;
+                    throw error
+                }
+            }).then((response) => {
+                if (response.headers['content-type'] !== 'application/json') {
+                    let error = new Error('Некорректный ответ от сервера');
+                    error.response = response;
+                    throw error
+                }
+                return response.data;
+            }).then((json) => {
+                setFilterDataSource(json);
+                setMasterDataSource(json);
+            })
+    }, []);
 
     const searchFilterFunction = (text) => {
-        if(text){
-            const newData = masterDataSource.filter(function(item){
+        if (text) {
+            const newData = masterDataSource.filter(function (item) {
+                const itemData = item.name
+                    ? item.name.toUpperCase()
+                    : ''.toUpperCase();
                 const textData = text.toUpperCase();
-            })
+                return itemData.indexOf(textData) > -1
+            });
             setFilterDataSource(newData);
             setSearch(text);
-        }else{
+            console.log(newData);
+        } else {
             setFilterDataSource(masterDataSource);
             setSearch(text);
+            //console.log(filterDataSource);
         }
-    }
+    };
 
-    const ItemView = ({item}) =>{
-        return(
+    const ItemView = ({ item }) => {
+        return (
             <Text style={styles.itemStyle} onPress={() => getItem(item)}>
                 {item.id}
                 {'.'}
-                {item.title.toUpperCase()}
+                {item.name.toUpperCase()}
             </Text>
         )
     }
 
-    return(
-        <SafeAreaView style = {{flex: 1}}>
-            <View style = {styles.container}>
-                <SearchBar
-                      searchIcon={{ size: 24 }}
-                      onChangeText={(text) => searchFilterFunction(text)}
-                      onClear={(text) => searchFilterFunction('')}
-                      placeholder="Type Here..."
-                      value={search}
+    const ItemSeparatorView = () => {
+        return (
+            <View
+                style={{
+                    height: 0.5,
+                    width: '100%',
+                    backgroundColor: '#C8C8C8',
+                }}
+            />
+        );
+    };
+
+    const getItem = (item) => {
+        alert('Id: ' + item.id + ' Title :' + item.name + ' Coast: ' + item.cost);
+    }
+
+
+
+    return (
+        <SafeAreaView style={{ flex: 1 }}>
+            <View style={styles.container}>
+                <TextInput
+                    style={styles.textInput}
+                    searchIcon={{ size: 24 }}
+                    onChangeText={(text) => searchFilterFunction(text)}
+                    value={search}
+                    placeholder="Type Here..."
+                    value={search}
                 />
                 <FlatList
                     data={filterDataSource}
                     keyExtractor={(item, index) => index.toString()}
-                    //ItemSeparatorComponent={ItemSeparatorView}
+                    ItemSeparatorComponent={ItemSeparatorView}
                     renderItem={ItemView}
                 />
             </View>
@@ -90,10 +112,20 @@ const obj =[
 const styles = StyleSheet.create({
     container: {
         backgroundColor: 'white',
-      },
-      itemStyle: {
+    },
+    itemStyle: {
         padding: 10,
-      },
+    },
+    textInput: {
+        height: 40,
+        borderWidth: 1,
+        padding: 10,
+        paddingLeft: 20,
+        margin: 5,
+        borderColor: 'pink',
+        backgroundColor: '#fff',
+        borderRadius: 20,
+    }
 });
 
 export default SearchBar;
