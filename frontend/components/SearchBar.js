@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { ImageCard } from './ImageCard.js';
+import { Layout } from './Layout.js';
 import axios from 'axios';
 
 import {
     SafeAreaView,
-    Text,
     View,
     StyleSheet,
     TextInput,
-    FlatList,
 } from 'react-native';
 
 const path = 'http://localhost:8080/';
@@ -16,7 +16,7 @@ const SearchBar = () => {
     const [search, setSearch] = useState('');
     const [filterDataSource, setFilterDataSource] = useState([]);
     const [masterDataSource, setMasterDataSource] = useState([]);
-
+  
     useEffect(() => {
         axios.get(path + 'items/get/all')
             .then((response) => {
@@ -55,37 +55,34 @@ const SearchBar = () => {
         } else {
             setFilterDataSource(masterDataSource);
             setSearch(text);
-            //console.log(filterDataSource);
         }
     };
 
-    const ItemView = ({ item }) => {
-        return (
-            <Text style={styles.itemStyle} onPress={() => getItem(item)}>
-                {item.id}
-                {'.'}
-                {item.name.toUpperCase()}
-            </Text>
-        )
-    }
+    // const ItemView = ({ item }) => {
+    //     return (
+    //         <Text style={styles.itemStyle} onPress={() => getItem(item)}>
+    //             {item.id}
+    //             {'.'}
+    //             {item.name.toUpperCase()}
+    //         </Text>
+    //     )
+    // }
 
-    const ItemSeparatorView = () => {
-        return (
-            <View
-                style={{
-                    height: 0.5,
-                    width: '100%',
-                    backgroundColor: '#C8C8C8',
-                }}
-            />
-        );
-    };
+    // const ItemSeparatorView = () => {
+    //     return (
+    //         <View
+    //             style={{
+    //                 height: 0.5,
+    //                 width: '100%',
+    //                 backgroundColor: '#C8C8C8',
+    //             }}
+    //         />
+    //     );
+    // };
 
-    const getItem = (item) => {
-        alert('Id: ' + item.id + ' Title :' + item.name + ' Coast: ' + item.cost);
-    }
-
-
+    // const getItem = (item) => {
+    //     alert('Id: ' + item.id + ' Title :' + item.name + ' Coast: ' + item.cost);
+    // }
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -98,12 +95,13 @@ const SearchBar = () => {
                     placeholder="Type Here..."
                     value={search}
                 />
-                <FlatList
-                    data={filterDataSource}
-                    keyExtractor={(item, index) => index.toString()}
-                    ItemSeparatorComponent={ItemSeparatorView}
-                    renderItem={ItemView}
-                />
+                <Layout>
+                {filterDataSource.map(item =>{
+                        return(
+                            <ImageCard data={item} key={item.id}/>
+                        )
+                    })}
+                </Layout>
             </View>
         </SafeAreaView>
     );

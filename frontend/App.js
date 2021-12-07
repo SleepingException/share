@@ -1,19 +1,15 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity  } from 'react-native';
+import { ScrollView, View} from 'react-native';
 import SearchBar from './components/SearchBar.js';
+import {Header} from './components/Header.js';
 
 export default function App() {
   return (
-      <View  style={styles.container}>
-        <SearchBar/>
-      </View>
-    );
+    <View>
+      <Header title='ShareIt!' />
+      <ScrollView>
+          <SearchBar/>
+      </ScrollView>
+    </View>
+  );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'gray',
-  },
-});
