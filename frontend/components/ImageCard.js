@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, View, Text, StyleSheet } from 'react-native'
+import { Image, View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { w } from '../constants'
 
 const styles = StyleSheet.create({
@@ -33,12 +33,12 @@ const ImageCard = ({ data }) => {
   const { container, sub, h1, cover } = styles
   const { name, id } = data
   return (
-    <View style={container}>
-      <View style={sub}>
-        <Image style={cover} source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Weschch_1-2.jpg/1200px-Weschch_1-2.jpg' }} />
+      <View style={container}>
+        <View style={sub}>
+          <Image style={cover} source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Weschch_1-2.jpg/1200px-Weschch_1-2.jpg' }} />
+        </View>
+        <Text style={h1}>{id + '.' + name.toUpperCase()}</Text>
       </View>
-      <Text style={h1}>{id + '.' + name.toUpperCase()}</Text>
-    </View>
   )
 }
 
