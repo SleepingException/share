@@ -10,7 +10,6 @@ import {
     TextInput,
     TouchableOpacity
 } from 'react-native';
-import ItemDetails from './ItemDetails.js';
 
 const path = 'http://localhost:8080/';
 
@@ -74,7 +73,9 @@ const SearchBar = (props) => {
                 <Layout>
                     {filterDataSource.map(item => {
                         return (
-                            <TouchableOpacity key={item.id} onPress={props.func} >
+                            <TouchableOpacity key={item.id} onPress={() => {
+                                props.action.navigate('ItemDetails', {data: item});
+                            }}>
                                 <ImageCard data={item} key={item.id} />
                             </TouchableOpacity>
                         )

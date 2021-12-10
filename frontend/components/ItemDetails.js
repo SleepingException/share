@@ -1,14 +1,14 @@
 import React from 'react';
 import { Text, StyleSheet, View, Image } from 'react-native';
+import {ImageBigCard} from './ImageBigCard';
 
-function ItemDetails({ props }) {
-  console.log(props)
+function ItemDetails({ route }) {
+  let data = route.params.data;
   return (
     <View style={styles.container}>
-      <Image source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Weschch_1-2.jpg/1200px-Weschch_1-2.jpg' }}/>
-      <Text style={styles.h1}></Text>
-      {/* <Text style={h1}>{name.toUpperCase()}</Text>
-      <Text style={h2}>{summary.replace(/<[^>]+>/g, '')}</Text> */}
+      <ImageBigCard source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Weschch_1-2.jpg/1200px-Weschch_1-2.jpg' }}/>
+      <Text style={styles.h1}>{data.name}</Text>
+      <Text style={styles.h1}>{data.cost} $</Text>
     </View>
   );
 
@@ -21,8 +21,8 @@ const styles = StyleSheet.create({
   h1: {
     fontFamily: 'AvenirNext-DemiBold',
     fontSize: 30,
-    padding: 15,
-    textAlign: 'center'
+    padding: 5,
+    textAlign: 'left'
   },
 });
 export default ItemDetails;
