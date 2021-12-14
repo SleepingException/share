@@ -8,15 +8,17 @@ import {
     View,
     StyleSheet,
     TextInput,
+    TouchableOpacity,
+    ScrollView
 } from 'react-native';
 
 const path = 'http://localhost:8080/';
 
-const SearchBar = () => {
+const SearchBar = (props) => {
     const [search, setSearch] = useState('');
     const [filterDataSource, setFilterDataSource] = useState([]);
     const [masterDataSource, setMasterDataSource] = useState([]);
-  
+
     useEffect(() => {
         axios.get(path + 'items/get/all')
             .then((response) => {
@@ -58,32 +60,6 @@ const SearchBar = () => {
         }
     };
 
-    // const ItemView = ({ item }) => {
-    //     return (
-    //         <Text style={styles.itemStyle} onPress={() => getItem(item)}>
-    //             {item.id}
-    //             {'.'}
-    //             {item.name.toUpperCase()}
-    //         </Text>
-    //     )
-    // }
-
-    // const ItemSeparatorView = () => {
-    //     return (
-    //         <View
-    //             style={{
-    //                 height: 0.5,
-    //                 width: '100%',
-    //                 backgroundColor: '#C8C8C8',
-    //             }}
-    //         />
-    //     );
-    // };
-
-    // const getItem = (item) => {
-    //     alert('Id: ' + item.id + ' Title :' + item.name + ' Coast: ' + item.cost);
-    // }
-
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={styles.container}>
@@ -95,13 +71,17 @@ const SearchBar = () => {
                     placeholder="Type Here..."
                     value={search}
                 />
-                <Layout>
-                {filterDataSource.map(item =>{
-                        return(
-                            <ImageCard data={item} key={item.id}/>
-                        )
-                    })}
-                </Layout>
+                    <Layout>
+                        {filterDataSource.map(item => {
+                            return (
+                                <TouchableOpacity key={item.id} onPress={() => {
+                                    props.action.navigate('ItemDetails', { data: item });
+                                }}>
+                                    <ImageCard data={item} key={item.id} />
+                                </TouchableOpacity>
+                            )
+                        })}
+                    </Layout>
             </View>
         </SafeAreaView>
     );
