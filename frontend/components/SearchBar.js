@@ -8,7 +8,8 @@ import {
     View,
     StyleSheet,
     TextInput,
-    TouchableOpacity
+    TouchableOpacity,
+    ScrollView
 } from 'react-native';
 
 const path = 'http://localhost:8080/';
@@ -70,17 +71,17 @@ const SearchBar = (props) => {
                     placeholder="Type Here..."
                     value={search}
                 />
-                <Layout>
-                    {filterDataSource.map(item => {
-                        return (
-                            <TouchableOpacity key={item.id} onPress={() => {
-                                props.action.navigate('ItemDetails', {data: item});
-                            }}>
-                                <ImageCard data={item} key={item.id} />
-                            </TouchableOpacity>
-                        )
-                    })}
-                </Layout>
+                    <Layout>
+                        {filterDataSource.map(item => {
+                            return (
+                                <TouchableOpacity key={item.id} onPress={() => {
+                                    props.action.navigate('ItemDetails', { data: item });
+                                }}>
+                                    <ImageCard data={item} key={item.id} />
+                                </TouchableOpacity>
+                            )
+                        })}
+                    </Layout>
             </View>
         </SafeAreaView>
     );

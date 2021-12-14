@@ -1,19 +1,17 @@
 import React from 'react'
-import Main from './screens/MainScreen'
-import ItemDetails from './components/ItemDetails'
+import Home from './Screens/Home'
+import ItemDetails from './Screens/ItemDetails'
 
 import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
 
 const Stack = createStackNavigator();
 
 function Navigate(){
     return(
-        <NavigationContainer>
             <Stack.Navigator>
                 <Stack.Screen
                     name="Main"
-                    component={Main}
+                    component={Home}
                     options={{headerShown: false}}
                 />
                 <Stack.Screen
@@ -22,7 +20,6 @@ function Navigate(){
                     options={{title: ''}}
                 />
             </Stack.Navigator>
-        </NavigationContainer>
     );
 }
 

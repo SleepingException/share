@@ -1,8 +1,11 @@
 import React from 'react';
-import MainStack from './navigation';
+import NavigationBar from './tabsNavigator'
+import { NavigationContainer } from '@react-navigation/native';
 
 export default function App() {
   return (
-    <MainStack />
+    <NavigationContainer>
+      <NavigationBar />
+    </NavigationContainer>
   );
 }
