@@ -1,14 +1,13 @@
 import React from 'react';
-import { ScrollView, View } from 'react-native';
+import { ScrollView, View, Button } from 'react-native';
 import SearchBar from '../components/SearchBar'
 import { Header } from '../components/Header.js';
 
-export default function Home({ navigation }) {
+export default function Home(props) {
     return (
         <ScrollView>
             <View>
-                <Header title="Share!" />
-                <SearchBar action={navigation}/>
+                <SearchBar action={props.navigation} data={props.route.params} />
             </View>
         </ScrollView>
     );

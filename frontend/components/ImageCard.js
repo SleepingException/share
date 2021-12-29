@@ -31,13 +31,13 @@ const styles = StyleSheet.create({
 
 const ImageCard = ({ data }) => {
   const { container, sub, h1, cover } = styles
-  const { name, id } = data
+  const { name, id, image } = data
   return (
       <View style={container}>
         <View style={sub}>
-          <Image style={cover} source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Weschch_1-2.jpg/1200px-Weschch_1-2.jpg' }} />
+          <Image style={cover} source={{ uri: image }} />
         </View>
-        <Text style={h1}>{id + '.' + name.toUpperCase()}</Text>
+        <Text style={h1}>{name.toUpperCase()}</Text>
       </View>
   )
 }

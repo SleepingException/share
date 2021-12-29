@@ -6,13 +6,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 const Stack = createStackNavigator();
 
-function Navigate(){
+function Navigate(route){
     return(
             <Stack.Navigator>
                 <Stack.Screen
                     name="Main"
                     component={Home}
                     options={{headerShown: false}}
+                    
                 />
                 <Stack.Screen
                     name='ItemDetails'

@@ -4,14 +4,15 @@ import {ImageBigCard} from '../components/ImageBigCard';
 
 function ItemDetails({ route }) {
   let data = route.params.data;
+  let name = data.name[0].toUpperCase() + data.name.slice(1);
   return (
     <View style={styles.container}>
-      <ImageBigCard source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Weschch_1-2.jpg/1200px-Weschch_1-2.jpg' }}/>
-      <Text style={styles.h1}>{data.name}</Text>
-      <Text style={styles.h1}>{data.cost} $</Text>
+      <ImageBigCard source={{ uri: data.image }}/>
+      <Text style={styles.h1}>{name}</Text>
+      <Text style={styles.cost}>{data.cost} руб.</Text>
+      <Text style={styles.description}>{data.description}</Text>
     </View>
   );
-
 }
 const styles = StyleSheet.create({
   container: {
@@ -24,5 +25,16 @@ const styles = StyleSheet.create({
     padding: 5,
     textAlign: 'left'
   },
+  cost:{
+    fontSize: 30,
+    fontWeight: "700",
+    padding: 5,
+    textAlign: 'left'
+  }, 
+  description:{
+    fontSize: 20,
+    padding: 10,
+    textAlign: 'left'
+  }
 });
 export default ItemDetails;
